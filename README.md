@@ -1,1 +1,1 @@
-# To-Do-Application
+I have implemented a responsive design for our To-Do application, ensuring that the user interface adapts seamlessly to different screen sizes and devices, providing an optimized experience for both desktop and mobile users.
