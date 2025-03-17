@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const taskInput = document.getElementById("taskInput");
     const addTaskBtn = document.getElementById("addTaskBtn");
     const taskList = document.getElementById("taskList");
-
+    const deleteAllBtn = document.getElementById("deleteAllBtn"); // Delete all tasks button
     // Load tasks from localStorage
     loadTasks();
 
@@ -10,6 +10,14 @@ document.addEventListener("DOMContentLoaded", () => {
     taskInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             addTask();
+        }
+    });
+
+    // Delete all tasks event
+    deleteAllBtn.addEventListener("click", () => {
+        if (confirm("Are you sure you want to delete all tasks?")) {
+            taskList.innerHTML = ""; // Clear task list
+            saveTasks(); // Save empty list to localStorage
         }
     });
 
@@ -41,7 +49,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         deleteBtn.addEventListener("click", () => {
             listItem.remove();
-            saveTasks(); 
+            saveTasks();
         });
 
         listItem.appendChild(taskSpan);
@@ -58,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const newTask = prompt("Edit your task:", taskSpan.textContent);
         if (newTask !== null) {
             taskSpan.textContent = newTask.trim();
-            saveTasks(); 
+            saveTasks();
         }
     }
 
@@ -71,12 +79,10 @@ document.addEventListener("DOMContentLoaded", () => {
             tasks.push(taskText);
         });
 
-        // Save the tasks in localStorage as a string
         localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 
     function loadTasks() {
-        // Load tasks from localStorage if any exist
         const tasks = JSON.parse(localStorage.getItem("tasks"));
 
         if (tasks && tasks.length > 0) {
@@ -90,7 +96,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 editBtn.textContent = "Edit";
                 editBtn.classList.add("edit-btn");
 
-                // Edit button functionality
                 editBtn.addEventListener("click", () => {
                     const confirmChange = confirm("Confirm to Change!");
                     if (confirmChange) {
@@ -104,10 +109,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteBtn.textContent = "Delete";
                 deleteBtn.classList.add("delete-btn");
 
-                // Delete button functionality
                 deleteBtn.addEventListener("click", () => {
                     listItem.remove();
-                    saveTasks();  // Save the updated list after deletion
+                    saveTasks(); // Save the updated list after deletion
                 });
 
                 listItem.appendChild(taskSpan);
